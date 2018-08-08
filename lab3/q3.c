@@ -22,8 +22,10 @@ void matrixMultS(int x[][10],int y[][10],int z[][10],int n){
 	else{
 		int a[10][10],b[10][10],c[10][10],d[10][10],e[10][10],f[10][10],g[10][10],h[10][10];
 		int m[10][10],t[10][10],o[10][10],p[10][10];
-		int p1[10][10],p2[10][10];
+		int p1[10][10],p2[10][10],p3[10][10],p4[10][10],p5[10][10],p6[10][10],p7[10][10];
 
+		//to store array subtractions and addtions
+		int temp1[10][10];int temp2[10][10];
 		int i,j;
 		//assign a,b,c,d,e,f,g,h
 		//assign a
@@ -66,17 +68,33 @@ void matrixMultS(int x[][10],int y[][10],int z[][10],int n){
 			for(j=n/2;j<n;++j)
 				h[i-(n/2)][j-(n/2)]=y[i][j];
 
-		matrixMultS(a,e,p1,n/2);matrixMultS(b,g,p2,n/2);
-		matrixAdd(p1,p2,m,n/2);
+			
+		matrixSub(f,h,temp1,n/2);matrixMultS(a,temp1,p1,n/2);
 
-		matrixMultS(a,f,p1,n/2);matrixMultS(b,h,p2,n/2);
+		matrixAdd(a,b,temp1,n/2);matrixMultS(temp1,h,p2,n/2);
+
+		matrixAdd(c,d,temp1,n/2);matrixMultS(temp1,e,p3,n/2);
+
+		matrixSub(g,e,temp1,n/2);matrixMultS(d,temp1,p4,n/2);
+
+		matrixAdd(a,d,temp1,n/2);matrixAdd(e,h,temp2,n/2);matrixMultS(temp1,temp2,p5,n/2);
+
+		matrixSub(b,d,temp1,n/2);matrixAdd(g,h,temp2,n/2);matrixMultS(temp1,temp2,p6,n/2);
+
+		matrixSub(a,c,temp1,n/2);matrixAdd(e,f,temp2,n/2);matrixMultS(temp1,temp2,p7,n/2);		
+
+		//assign the values to m,t,o,p
+		//assign to m
+		matrixAdd(p5,p4,m,n/2);matrixSub(m,p2,m,n/2);matrixAdd(m,p6,m,n/2);
+
+		//assign to t
 		matrixAdd(p1,p2,t,n/2);
 
-		matrixMultS(c,e,p1,n/2);matrixMultS(d,g,p2,n/2);
-		matrixAdd(p1,p2,o,n/2);
+		//assign to o
+		matrixAdd(p3,p4,o,n/2);
 
-		matrixMultS(c,f,p1,n/2);matrixMultS(d,h,p2,n/2);
-		matrixAdd(p1,p2,p,n/2);
+		//assign to p
+		matrixAdd(p1,p5,p,n/2);matrixSub(p,p3,p,n/2);matrixSub(p,p7,p,n/2);
 
 		
 		//assign m
